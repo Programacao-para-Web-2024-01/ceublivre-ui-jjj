@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
+    <title>Resultados da Busca - CEUB Livre</title>
+</head>
+<body>
+    <header>
+        <h1>Resultados da Busca</h1>
+        <!-- Inclua aqui os elementos de filtro, se necessário -->
+    </header>
+
+    <canvas></canvas>
+
+    <main>
+        <section id="product-list">
+            <!-- Os produtos serão carregados aqui dinamicamente -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 CEUB Livre. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="animation.js"></script>
+    <script>
+        // Adicione aqui o script JavaScript para buscar e exibir os produtos com base nos parâmetros da URL
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const keyword = urlParams.get('keyword');
+            const priceMin = urlParams.get('price_min');
+            const priceMax = urlParams.get('price_max');
+            const category = urlParams.get('category');
+            const sortBy = urlParams.get('sort_by');
+            const sortOrder = urlParams.get('sort_order');
+
+            // Construa a URL para a busca de produtos
+            let apiUrl = `http://localhost:8080/search?`;
+            if (keyword) apiUrl += `keyword=${encodeURIComponent(keyword)}&`;
+            if (priceMin) apiUrl += `price_min=${encodeURIComponent(priceMin)}&`;
+            if (priceMax) apiUrl += `price_max=${encodeURIComponent(priceMax)}&`;
+            if (category) apiUrl += `category=${encodeURIComponent(category)}&`;
+            if (sortBy) apiUrl += `sort_by=${encodeURIComponent(sortBy)}&`;
+            if (sortOrder) apiUrl += `sort_order=${encodeURIComponent(sortOrder)}&`;
+
+            // Remove o último '&', se houver
+            apiUrl = apiUrl.slice(0, -1);
+
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(products => {
+                    console.log('Produtos retornados:', products); // Log para depuração
+                    const productList = document.getElementById('product-list');
+
+                    // Limpa o conteúdo atual da lista de produtos
+                    productList.innerHTML = '';
+
+                    // Renderiza os produtos na lista
+                    products.forEach(product => {
+                        const productItem = document.createElement('div');
+                        productItem.classList.add('product-item');
+                        productItem.innerHTML = `
+                            <img src="${product.imageURL}" alt="${product.name}">
+                            <h2>${product.name}</h2>
+                            <p>${product.description || 'Descrição não disponível'}</p>
+                            <p><strong>Preço:</strong> $${product.price}</p>
+                            <p><strong>Categoria:</strong> ${product.category}</p>
+                            <p><strong>Avaliação:</strong> ${product.rating}</p>
+                        `;
+                        productList.appendChild(productItem);
+                    });
+                })
+                .catch(error => console.error('Erro ao buscar detalhes do produto:', error));
+        });
+    </script>
+</body>
+</html>
