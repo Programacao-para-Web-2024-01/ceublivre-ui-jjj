@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
+    <title>CEUB Livre</title>
+</head>
+<body>
+    <header>
+        <h1>CEUB Livre</h1>
+        <input type="text" id="search-input" placeholder="Busque por produtos...">
+        <input type="number" id="price-min" placeholder="Preço mínimo">
+        <input type="number" id="price-max" placeholder="Preço máximo">
+        <select id="category-select">
+            <option value="">Todas as categorias</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Accessories">Accessories</option>
+            <option value="Wearables">Wearables</option>
+            <option value="Photography">Photography</option>
+            <option value="Audio">Audio</option>
+        </select>
+        <select id="sort-by">
+            <option value="">Ordenar por</option>
+            <option value="name">Nome</option>
+            <option value="brand">Marca</option>
+            <option value="price">Preço</option>
+            <option value="rating">Avaliação</option>
+        </select>
+        <select id="sort-order">
+            <option value="asc">Ordem crescente</option>
+            <option value="desc">Ordem decrescente</option>
+        </select>
+        <button id="search-button">Buscar</button>
+    </header>
+    
+    <canvas></canvas>    
+
+    <main>
+        <section id="product-list">
+            <!-- Os produtos serão carregados aqui -->
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 CEUB Livre. Todos os direitos reservados.</p>
+    </footer>  
+
+    <script src="animation.js"></script>
+    <script>
+        // Adicione aqui o script JavaScript para lidar com a funcionalidade de busca
+        document.getElementById('search-button').addEventListener('click', () => {
+            const searchInput = document.getElementById('search-input').value;
+            const priceMin = document.getElementById('price-min').value;
+            const priceMax = document.getElementById('price-max').value;
+            const category = document.getElementById('category-select').value;
+            const sortBy = document.getElementById('sort-by').value;
+            const sortOrder = document.getElementById('sort-order').value;
+
+            const queryParams = new URLSearchParams();
+            if (searchInput) queryParams.append('keyword', searchInput);
+            if (priceMin) queryParams.append('price_min', priceMin);
+            if (priceMax) queryParams.append('price_max', priceMax);
+            if (category) queryParams.append('category', category);
+            if (sortBy) queryParams.append('sort_by', sortBy);
+            if (sortOrder) queryParams.append('sort_order', sortOrder);
+
+            // Redireciona para product.html com os parâmetros de busca na URL
+            window.location.href = `product.html?${queryParams.toString()}`;
+        });
+    </script>
+</body>
+</html>

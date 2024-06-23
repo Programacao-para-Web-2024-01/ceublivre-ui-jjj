@@ -1,0 +1,100 @@
+body {
+    font-family: 'Lato', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+}
+
+header {
+    text-align: center;
+    padding: 1em 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    color: white;
+    background-color: #333
+}
+
+header input[type="text"] {
+    padding: 0.5em;
+    font-size: 1em;
+    margin-right: 0.5em;
+    width: 300px;
+}
+
+header button {
+    padding: 0.5em 1em;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+#product-details {
+    padding: 20px;
+    border-radius: 8px;
+    color: white;
+    margin-top: 6em;
+}
+
+#product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    padding: 1em;
+    color: #ccc;
+}
+
+.product-item {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 1em;
+    width: calc(33.333% - 2em);
+    box-sizing: border-box;
+    transition: box-shadow 0.3s;
+}
+
+.product-item:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.product-item img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.product-item h2 {
+    font-size: 1.2em;
+    margin: 0.5em 0;
+}
+
+.product-item p {
+    margin: 0.5em 0;
+}
+
+canvas {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    color: white;
+    padding: 10px 0;
+    z-index: 2;
+}
+
+main {
+    position: relative;
+    z-index: 1;
+    color: white;
+    padding-top: 7em;
+    padding-bottom: 3em;
+}
